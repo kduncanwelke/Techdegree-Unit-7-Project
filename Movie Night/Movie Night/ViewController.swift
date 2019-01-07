@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
    
-        DataManager<Genre>.fetch() { result in
+        /*DataManager<Genre>.fetch() { result in
             switch result {
             case .success(let response):
                 print(response)
@@ -30,8 +30,15 @@ class ViewController: UIViewController {
             case .failure(let error):
                 print(error)
             }
-        }
+        }*/
     }
+    
+    // MARK: IBOutlets
+    
+    @IBAction func selectDetails(_ sender: UIButton) {
+        performSegue(withIdentifier: "makeSelections", sender: (Any).self)
+    }
+    
 
 }
 

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2D6F466B21DFCD240037D51E /* MovieType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6F466A21DFCD240037D51E /* MovieType.swift */; };
 		2D6F466D21DFE6620037D51E /* HandlePrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6F466C21DFE6620037D51E /* HandlePrefix.swift */; };
+		2D6F467121E025370037D51E /* GenreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6F467021E025370037D51E /* GenreTableViewController.swift */; };
+		2D7DB26E21E3D28200454189 /* ActorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DB26D21E3D28200454189 /* ActorTableViewController.swift */; };
 		2DC1786221DD724600817ACA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC1786121DD724600817ACA /* AppDelegate.swift */; };
 		2DC1786421DD724600817ACA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC1786321DD724600817ACA /* ViewController.swift */; };
 		2DC1786721DD724600817ACA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DC1786521DD724600817ACA /* Main.storyboard */; };
@@ -26,6 +28,8 @@
 /* Begin PBXFileReference section */
 		2D6F466A21DFCD240037D51E /* MovieType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieType.swift; sourceTree = "<group>"; };
 		2D6F466C21DFE6620037D51E /* HandlePrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlePrefix.swift; sourceTree = "<group>"; };
+		2D6F467021E025370037D51E /* GenreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewController.swift; sourceTree = "<group>"; };
+		2D7DB26D21E3D28200454189 /* ActorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorTableViewController.swift; sourceTree = "<group>"; };
 		2DC1785E21DD724600817ACA /* Movie Night.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Night.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DC1786121DD724600817ACA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DC1786321DD724600817ACA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,7 +81,9 @@
 				2DC1787521DD82EB00817ACA /* Networking */,
 				2DC1786821DD724800817ACA /* Assets.xcassets */,
 				2DC1786321DD724600817ACA /* ViewController.swift */,
+				2D6F467021E025370037D51E /* GenreTableViewController.swift */,
 				2DC1786521DD724600817ACA /* Main.storyboard */,
+				2D7DB26D21E3D28200454189 /* ActorTableViewController.swift */,
 				2DC1786A21DD724800817ACA /* LaunchScreen.storyboard */,
 				2DC1786D21DD724800817ACA /* Info.plist */,
 			);
@@ -187,7 +193,9 @@
 				2DC1787721DD831700817ACA /* Result.swift in Sources */,
 				2D6F466B21DFCD240037D51E /* MovieType.swift in Sources */,
 				2DE966C221DE8B4F0092E7BC /* Actor.swift in Sources */,
+				2D6F467121E025370037D51E /* GenreTableViewController.swift in Sources */,
 				2DC1786221DD724600817ACA /* AppDelegate.swift in Sources */,
+				2D7DB26E21E3D28200454189 /* ActorTableViewController.swift in Sources */,
 				2DC1787E21DD880700817ACA /* JSONDecoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
