@@ -9,19 +9,13 @@
 import UIKit
 
 class RatingTableViewController: UITableViewController {
-    // passed from previous view
-    var chosenGenres = [Genre]()
-    var chosenActors = [Actor]()
-    
-    var selectedMinimumRating = Int()
-    
-    var viewer = Int()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(Viewer.viewer1)
+        print(Viewer.viewer2)
 
-        print(chosenGenres)
-        print(chosenActors)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -88,27 +82,39 @@ class RatingTableViewController: UITableViewController {
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is ViewController {
+        if segue.identifier == "unwindAfterSubmit" {
             let selectedItem = tableView.indexPathsForSelectedRows
             guard let selection = selectedItem else { return }
             let item = selection[0]
-            selectedMinimumRating = Rating.ratingPercentages[item.row].value
-            
-            let destinationViewController = segue.destination as? ViewController
-            if viewer == 1 {
-                destinationViewController?.viewer1.preferredGenres.append(contentsOf: chosenGenres)
-                destinationViewController?.viewer1.preferredActors.append(contentsOf: chosenActors)
-                destinationViewController?.viewer1.preferredMinimumRating = selectedMinimumRating
-            } else if viewer == 2 {
-                destinationViewController?.viewer2.preferredGenres.append(contentsOf: chosenGenres)
-                destinationViewController?.viewer2.preferredActors.append(contentsOf: chosenActors)
-                destinationViewController?.viewer2.preferredMinimumRating = selectedMinimumRating
+           
+            switch Viewer.currentlySelected {
+            case .viewer1:
+                Viewer.viewer1.preferredMinimumRating = Rating.ratingPercentages[item.row].value
+                Viewer.hasViewer1Selected = true
+            case .viewer2:
+                Viewer.viewer2.preferredMinimumRating = Rating.ratingPercentages[item.row].value
+                Viewer.hasViewer2Selected = true
+            default:
+                break // should not be able to be none, add error handling if is
+            }
+        }
+        
+        if segue.identifier == "unwindToActors" {
+            switch Viewer.currentlySelected {
+            case .viewer1:
+                Viewer.viewer1.preferredActors.removeAll()
+                Viewer.viewer1.preferredMinimumRating = 0
+            case .viewer2:
+                Viewer.viewer2.preferredActors.removeAll()
+                Viewer.viewer2.preferredMinimumRating = 0
+            default:
+                break // should not be able to be none, add error handling if is
             }
         }
     }
     
+    // MARK: Actions
     
     @IBAction func backButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "unwindToActors", sender: Any?.self)

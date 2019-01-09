@@ -12,5 +12,17 @@ struct Viewer {
     var preferredGenres: [Genre]
     var preferredActors: [Actor]
     var preferredMinimumRating: Int
+    
+    static var viewer1 = Viewer(preferredGenres: [], preferredActors: [], preferredMinimumRating: 0)
+    static var viewer2 = Viewer(preferredGenres: [], preferredActors: [], preferredMinimumRating: 0)
+    
+    static var hasViewer1Selected = false
+    static var hasViewer2Selected = false
+    
+    enum CurrentlySelected {
+        case viewer1, viewer2, none
+    }
+    
+    static var currentlySelected = CurrentlySelected.none
 }
 

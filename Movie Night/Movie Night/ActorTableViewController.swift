@@ -9,20 +9,18 @@
 import UIKit
 
 class ActorTableViewController: UITableViewController {
-    // passed from previous view
-    var chosenGenres = [Genre]()
+
+    // MARK: Variables
     
     var actorsList = [Actor]()
-    var selectedActors = [Actor]()
-    
     var selectedCount = 0
     
-    var viewer = Int()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        selectedActors.removeAll()
+        
+        print(Viewer.viewer1)
+        print(Viewer.viewer2)
         
         DataManager<Actor>.fetch() { result in
             switch result {
@@ -114,22 +112,41 @@ class ActorTableViewController: UITableViewController {
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let selectedItems = tableView.indexPathsForSelectedRows
-        guard let selections = selectedItems else { return }
-        for item in selections {
-            selectedActors.append(actorsList[item.row])
+        if segue.identifier == "goToRatingSelection" {
+            let selectedItems = tableView.indexPathsForSelectedRows
+            guard let selections = selectedItems else { return }
+            
+            switch Viewer.currentlySelected {
+            case .viewer1:
+                for item in selections {
+                    Viewer.viewer1.preferredActors.append(actorsList[item.row])
+                }
+            case .viewer2:
+                for item in selections {
+                    Viewer.viewer2.preferredActors.append(actorsList[item.row])
+                }
+            default:
+                break // should not be able to be none, add error handling if is
+            }
         }
         
-        if let navController = segue.destination as? UINavigationController {
-            if let child = navController.topViewController as? RatingTableViewController {
-                child.chosenActors = selectedActors
-                child.chosenGenres = chosenGenres
-                child.viewer = viewer
+        if segue.identifier == "unwindToGenre" {
+            switch Viewer.currentlySelected {
+            case .viewer1:
+                Viewer.viewer1.preferredGenres.removeAll()
+                Viewer.viewer1.preferredActors.removeAll()
+            case .viewer2:
+                Viewer.viewer2.preferredGenres.removeAll()
+                Viewer.viewer2.preferredActors.removeAll()
+            default:
+                break // should not be able to be none, add error handling if is
             }
         }
     }
+    
+    
+    // MARK: Actions
     
     @IBAction func backButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "unwindToGenre", sender: Any?.self)

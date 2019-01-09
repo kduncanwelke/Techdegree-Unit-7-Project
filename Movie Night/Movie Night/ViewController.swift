@@ -10,49 +10,65 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var chosenGenres = [Genre]()
-    var chosenActors = [Actor]()
-    var chosenMinimumRating = Int()
+    // MARK: Outlets
     
-    var viewer1 = Viewer(preferredGenres: [], preferredActors: [], preferredMinimumRating: 0)
-    var viewer2 = Viewer(preferredGenres: [], preferredActors: [], preferredMinimumRating: 0)
-    
-    var viewer = Int()
+    @IBOutlet weak var viewer1ChoicesLabel: UILabel!
+    @IBOutlet weak var viewer2ChoicesLabel: UILabel!
     
     @IBOutlet weak var viewer1View: UIButton!
     @IBOutlet weak var viewer2View: UIButton!
     
+    @IBOutlet weak var resultsButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        print(viewer1)
-        print(viewer2)
+        updateUI()
+        
+        resultsButton.isEnabled = false
     }
     
-    // MARK: - Navigation
+    // MARK: Custom functions
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let navController = segue.destination as? UINavigationController {
-            if let child = navController.topViewController as? GenreTableViewController {
-                if segue.identifier == "selectForViewer1" {
-                    child.viewer = 1
-                } else if segue.identifier == "selectForViewer2" {
-                    child.viewer = 2
-                }
-            }
+    func updateUI() {
+        if Viewer.hasViewer1Selected {
+            viewer1View.setImage(UIImage(named: "bubble-selected"), for: .normal)
+            viewer1ChoicesLabel.text = "Genres: \(Viewer.viewer1.preferredGenres.count) selected \nActors: \(Viewer.viewer1.preferredActors.count) selected \nMinimum rating: \(Viewer.viewer1.preferredMinimumRating)0%"
+        }
+        if Viewer.hasViewer2Selected {
+            viewer2View.setImage(UIImage(named: "bubble-selected"), for: .normal)
+            viewer2ChoicesLabel.text = "Genres: \(Viewer.viewer2.preferredGenres.count) selected \nActors: \(Viewer.viewer2.preferredActors.count) selected \nMinimum rating: \(Viewer.viewer2.preferredMinimumRating)0%"
+        }
+        if Viewer.hasViewer1Selected && Viewer.hasViewer2Selected {
+            resultsButton.isEnabled = true
         }
     }
     
-    // MARK: IBOutlets
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "selectForViewer1" {
+            Viewer.currentlySelected = .viewer1
+        }
+        if segue.identifier == "selectForViewer2" {
+            Viewer.currentlySelected = .viewer2
+        }
+    }
+    
+    
+    // MARK: Actions
     
     @IBAction func view1ButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "selectForViewer1", sender: (Any).self)
     }
     
-    
     @IBAction func viewer2ButtonPressed(_ sender: Any) {
          performSegue(withIdentifier: "selectForViewer2", sender: (Any).self)
+    }
+    
+    
+    @IBAction func resultsButtonPressed(_ sender: Any) {
     }
     
 }

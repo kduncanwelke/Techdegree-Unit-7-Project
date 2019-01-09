@@ -10,18 +10,19 @@ import UIKit
 
 class GenreTableViewController: UITableViewController {
     
-    var genreList = [Genre]()
-    var selectedGenres = [Genre]()
+    // MARK: Variables
     
+    var genreList = [Genre]()
     var selectedCount = 0
     
-    var viewer = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(Viewer.viewer1)
+        
+        print(Viewer.viewer2)
 
-        print(viewer)
-        selectedGenres.removeAll()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -122,22 +123,37 @@ class GenreTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let selectedItems = tableView.indexPathsForSelectedRows
-        guard let selections = selectedItems else { return }
-            for item in selections {
-                selectedGenres.append(genreList[item.row])
-            }
+        if segue.identifier == "selectActors" {
+            let selectedItems = tableView.indexPathsForSelectedRows
+            guard let selections = selectedItems else { return }
+            
+            switch Viewer.currentlySelected {
+                case .viewer1:
+                    for item in selections {
+                        Viewer.viewer1.preferredGenres.append(genreList[item.row])
+                    }
+                case .viewer2:
+                    for item in selections {
+                        Viewer.viewer2.preferredGenres.append(genreList[item.row])
+                    }
+                default:
+                    break // should not be able to be none, add error handling if is
+                }
+        }
         
-        if let navController = segue.destination as? UINavigationController {
-            if let child = navController.topViewController as? ActorTableViewController {
-                child.chosenGenres = selectedGenres
-                child.viewer = viewer
+        if segue.identifier == "returnToBeginning" {
+            switch Viewer.currentlySelected {
+                case .viewer1:
+                    Viewer.viewer1.preferredGenres.removeAll()
+                case .viewer2:
+                    Viewer.viewer2.preferredGenres.removeAll()
+                default:
+                    break // should not be able to be none, add error handling if is
             }
         }
     }
     
-    
-    // MARK: IBOutlets
+    // MARK: Actions
     
     @IBAction func backButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "returnToBeginning", sender: Any?.self)

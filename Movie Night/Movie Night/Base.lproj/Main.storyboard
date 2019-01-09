@@ -122,6 +122,9 @@
                                 <state key="normal" title="See results">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="resultsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J2f-Iu-scc"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This product uses the TMDb API but is not endorsed or certified by TMDb." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TnT-sh-uE4">
                                 <rect key="frame" x="8" y="641" width="359" height="12"/>
@@ -164,7 +167,10 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="resultsButton" destination="N9O-Fe-lhN" id="PF9-dG-7ae"/>
+                        <outlet property="viewer1ChoicesLabel" destination="NY0-rf-KKt" id="7TM-fx-4qu"/>
                         <outlet property="viewer1View" destination="TEw-BU-gOe" id="ylD-fc-rKS"/>
+                        <outlet property="viewer2ChoicesLabel" destination="znf-29-IlH" id="2u5-6M-k6O"/>
                         <outlet property="viewer2View" destination="hXT-vD-9bO" id="D2I-A6-Wqq"/>
                         <segue destination="rIg-zV-iBC" kind="show" identifier="selectForViewer1" id="ei2-J7-HEI"/>
                         <segue destination="rIg-zV-iBC" kind="show" identifier="selectForViewer2" id="mDp-Ve-gyU"/>
@@ -177,7 +183,7 @@
         <!--Genre Selection-->
         <scene sceneID="Z0V-zP-C8n">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="tJB-4W-VN9" customClass="GenreTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="tJB-4W-VN9" customClass="GenreTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kiP-L3-j37">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -234,7 +240,7 @@
         <!--Actor Selection-->
         <scene sceneID="Kzu-Q0-Dag">
             <objects>
-                <tableViewController title="Actor Selection" clearsSelectionOnViewWillAppear="NO" id="Aqn-q8-4zx" customClass="ActorTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Actor Selection" id="Aqn-q8-4zx" customClass="ActorTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="D9z-9d-LIN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -289,7 +295,7 @@
         <!--Rating Selection-->
         <scene sceneID="WvO-3Y-Zbq">
             <objects>
-                <tableViewController title="Rating Selection" clearsSelectionOnViewWillAppear="NO" id="9Qq-At-HCb" customClass="RatingTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Rating Selection" id="9Qq-At-HCb" customClass="RatingTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uVN-Oe-8Z3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
