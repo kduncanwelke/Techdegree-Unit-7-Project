@@ -9,19 +9,24 @@
 import UIKit
 
 class ActorTableViewController: UITableViewController {
-    
+    // passed from previous view
     var chosenGenres = [Genre]()
+    
     var actorsList = [Actor]()
+    var selectedActors = [Actor]()
+    
+    var selectedCount = 0
+    
+    var viewer = Int()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print(chosenGenres)
+        selectedActors.removeAll()
         
         DataManager<Actor>.fetch() { result in
             switch result {
             case .success(let response):
-                print(response)
                 DispatchQueue.main.async {
                     self.actorsList = response
                     self.tableView.reloadData()
@@ -52,6 +57,24 @@ class ActorTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if selectedCount < 3 {
+            selectedCount += 1
+            return indexPath
+        } else {
+            // prevent selection of more than five items
+            print("list maxed out at 3")
+            tableView.cellForRow(at: indexPath)?.isSelected = false
+            tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+            return nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if selectedCount > 0 {
+            selectedCount -= 1
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -93,13 +116,28 @@ class ActorTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        chosenGenres.removeAll()
+        let selectedItems = tableView.indexPathsForSelectedRows
+        guard let selections = selectedItems else { return }
+        for item in selections {
+            selectedActors.append(actorsList[item.row])
+        }
+        
+        if let navController = segue.destination as? UINavigationController {
+            if let child = navController.topViewController as? RatingTableViewController {
+                child.chosenActors = selectedActors
+                child.chosenGenres = chosenGenres
+                child.viewer = viewer
+            }
+        }
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "unwindToGenre", sender: Any?.self)
     }
     
+    @IBAction func nextButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "goToRatingSelection", sender: Any?.self)
+    }
+
 }
+    

@@ -36,14 +36,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fQC-ad-i51">
                                         <rect key="frame" x="0.0" y="0.0" width="165" height="163.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEw-BU-gOe">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEw-BU-gOe">
                                                 <rect key="frame" x="21" y="0.0" width="123" height="97"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="TEw-BU-gOe" secondAttribute="height" multiplier="123:97" id="weQ-fb-yAF"/>
                                                 </constraints>
                                                 <state key="normal" image="bubble-empty"/>
                                                 <connections>
-                                                    <action selector="selectDetails:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2eu-ns-qvM"/>
+                                                    <action selector="view1ButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FAq-kd-ZTh"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="👤" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWZ-Ly-L3x">
@@ -77,14 +77,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="uRK-9J-ptv">
                                         <rect key="frame" x="0.0" y="0.0" width="165" height="159.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXT-vD-9bO">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXT-vD-9bO">
                                                 <rect key="frame" x="21" y="0.0" width="123" height="97"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="hXT-vD-9bO" secondAttribute="height" multiplier="123:97" id="Dc9-dn-aXa"/>
                                                 </constraints>
                                                 <state key="normal" image="bubble-empty"/>
                                                 <connections>
-                                                    <action selector="selectDetails:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Tb-GX-SkX"/>
+                                                    <action selector="viewer2ButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qm3-lc-bas"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="👤" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eiX-b4-464">
@@ -164,7 +164,10 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="rIg-zV-iBC" kind="show" identifier="makeSelections" id="ei2-J7-HEI"/>
+                        <outlet property="viewer1View" destination="TEw-BU-gOe" id="ylD-fc-rKS"/>
+                        <outlet property="viewer2View" destination="hXT-vD-9bO" id="D2I-A6-Wqq"/>
+                        <segue destination="rIg-zV-iBC" kind="show" identifier="selectForViewer1" id="ei2-J7-HEI"/>
+                        <segue destination="rIg-zV-iBC" kind="show" identifier="selectForViewer2" id="mDp-Ve-gyU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -233,7 +236,7 @@
             <objects>
                 <tableViewController title="Actor Selection" clearsSelectionOnViewWillAppear="NO" id="Aqn-q8-4zx" customClass="ActorTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="D9z-9d-LIN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                         <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -269,16 +272,78 @@
                                 <segue destination="tJB-4W-VN9" kind="show" identifier="unwindToGenre" id="1Ah-oA-YSz"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="1C7-Vl-Upr">
+                            <connections>
+                                <action selector="nextButtonPressed:" destination="Aqn-q8-4zx" id="ia7-vW-dAK"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="0PD-AH-aC2" kind="show" identifier="goToRatingSelection" id="Gov-It-eq8"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qbh-02-PU5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3326" y="134"/>
         </scene>
+        <!--Rating Selection-->
+        <scene sceneID="WvO-3Y-Zbq">
+            <objects>
+                <tableViewController title="Rating Selection" clearsSelectionOnViewWillAppear="NO" id="9Qq-At-HCb" customClass="RatingTableViewController" customModule="Movie_Night" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uVN-Oe-8Z3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexBackgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a minimum rating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RiR-yu-h7c">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ratingCell" id="N09-Xg-z0S">
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N09-Xg-z0S" id="b4Y-tt-Myx">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="9Qq-At-HCb" id="RuN-K2-BvG"/>
+                            <outlet property="delegate" destination="9Qq-At-HCb" id="kTG-m3-Y2N"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="vo8-T9-BWP">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="WiA-dG-CzH">
+                            <connections>
+                                <action selector="backButtonPressed:" destination="9Qq-At-HCb" id="P47-Aa-L6a"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="Nfb-hA-5B2">
+                            <connections>
+                                <action selector="submitButtonPressed:" destination="9Qq-At-HCb" id="vXa-oU-0dq"/>
+                                <segue destination="BYZ-38-t0r" kind="showDetail" identifier="unwindAfterSubmit" id="j0p-gp-kP4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="Aqn-q8-4zx" kind="show" identifier="unwindToActors" id="j35-4B-eQh"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hsX-d7-WFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4886" y="134"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="wKD-yL-Q6U">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QPK-5v-MbI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="rIg-zV-iBC" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="N2p-cD-sWY">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -293,6 +358,7 @@
                         <segue destination="tJB-4W-VN9" kind="relationship" relationship="rootViewController" id="L0V-gq-heS"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QPK-5v-MbI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="938" y="134"/>
         </scene>
@@ -319,12 +385,38 @@
             </objects>
             <point key="canvasLocation" x="2541.5999999999999" y="133.5832083958021"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="mrH-z3-vNP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0PD-AH-aC2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="P4f-bR-S2S">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="barTintColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9Qq-At-HCb" kind="relationship" relationship="rootViewController" id="p9n-RT-Ax4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sb1-DY-fSj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4100" y="134"/>
+        </scene>
     </scenes>
     <resources>
         <image name="408x161-powered-by-rectangle-green-bb4301c10ddc749b4e79463811a68afebeae66ef43d17bcfd8ff0e60ded7ce99" width="408" height="161"/>
         <image name="bubble-empty" width="123.5" height="97.5"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="mDp-Ve-gyU"/>
+        <segue reference="j35-4B-eQh"/>
         <segue reference="1Ah-oA-YSz"/>
+        <segue reference="j0p-gp-kP4"/>
     </inferredMetricsTieBreakers>
 </document>

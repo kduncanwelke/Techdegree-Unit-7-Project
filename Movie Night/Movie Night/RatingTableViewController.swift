@@ -1,46 +1,33 @@
 //
-//  GenreTableViewController.swift
+//  RatingTableViewController.swift
 //  Movie Night
 //
-//  Created by Kate Duncan-Welke on 1/4/19.
+//  Created by Kate Duncan-Welke on 1/8/19.
 //  Copyright © 2019 Kate Duncan-Welke. All rights reserved.
 //
 
 import UIKit
 
-class GenreTableViewController: UITableViewController {
+class RatingTableViewController: UITableViewController {
+    // passed from previous view
+    var chosenGenres = [Genre]()
+    var chosenActors = [Actor]()
     
-    var genreList = [Genre]()
-    var selectedGenres = [Genre]()
-    
-    var selectedCount = 0
+    var selectedMinimumRating = Int()
     
     var viewer = Int()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print(viewer)
-        selectedGenres.removeAll()
+        print(chosenGenres)
+        print(chosenActors)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        DataManager<Genre>.fetch() { result in
-            switch result {
-            case .success(let response):
-                DispatchQueue.main.async {
-                    self.genreList = response
-                    self.tableView.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
-    
 
     // MARK: - Table view data source
 
@@ -49,36 +36,17 @@ class GenreTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return genreList.count
+        return Rating.ratingPercentages.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "genreCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ratingCell", for: indexPath)
 
         // Configure the cell...
         cell.textLabel?.textColor = UIColor.white
-        cell.textLabel?.text = genreList[indexPath.row].name
+        cell.textLabel?.text = Rating.ratingPercentages[indexPath.row].title
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if selectedCount < 5 {
-            selectedCount += 1
-            return indexPath
-        } else {
-            // prevent selection of more than five items
-            print("list maxed out at 5")
-            tableView.cellForRow(at: indexPath)?.isSelected = false
-            tableView.cellForRow(at: indexPath)?.selectionStyle = .none
-            return nil
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if selectedCount > 0 {
-            selectedCount -= 1
-        }
     }
     
 
@@ -122,32 +90,33 @@ class GenreTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let selectedItems = tableView.indexPathsForSelectedRows
-        guard let selections = selectedItems else { return }
-            for item in selections {
-                selectedGenres.append(genreList[item.row])
-            }
-        
-        if let navController = segue.destination as? UINavigationController {
-            if let child = navController.topViewController as? ActorTableViewController {
-                child.chosenGenres = selectedGenres
-                child.viewer = viewer
+        if segue.destination is ViewController {
+            let selectedItem = tableView.indexPathsForSelectedRows
+            guard let selection = selectedItem else { return }
+            let item = selection[0]
+            selectedMinimumRating = Rating.ratingPercentages[item.row].value
+            
+            let destinationViewController = segue.destination as? ViewController
+            if viewer == 1 {
+                destinationViewController?.viewer1.preferredGenres.append(contentsOf: chosenGenres)
+                destinationViewController?.viewer1.preferredActors.append(contentsOf: chosenActors)
+                destinationViewController?.viewer1.preferredMinimumRating = selectedMinimumRating
+            } else if viewer == 2 {
+                destinationViewController?.viewer2.preferredGenres.append(contentsOf: chosenGenres)
+                destinationViewController?.viewer2.preferredActors.append(contentsOf: chosenActors)
+                destinationViewController?.viewer2.preferredMinimumRating = selectedMinimumRating
             }
         }
     }
     
-    
-    // MARK: IBOutlets
     
     @IBAction func backButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "returnToBeginning", sender: Any?.self)
+        performSegue(withIdentifier: "unwindToActors", sender: Any?.self)
     }
     
-    
-    @IBAction func goToActorSelection(_ sender: Any) {
-        if selectedCount > 0 {
-            performSegue(withIdentifier: "selectActors", sender: Any?.self)
-        }
+    @IBAction func submitButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "unwindAfterSubmit", sender: Any?.self)
     }
     
+
 }

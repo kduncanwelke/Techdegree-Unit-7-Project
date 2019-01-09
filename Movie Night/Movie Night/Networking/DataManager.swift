@@ -13,8 +13,6 @@ struct DataManager<T: MovieType> {
         Networker.fetchData(url: url) { result in
             switch result {
             case .success(let data):
-               // let json = try? JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                //print(json)
                 guard let response = try? JSONDecoder.TMDBDecoder.decode(HandlePrefix<T>.self, from: data) else {
                     print("fail")
                     return
