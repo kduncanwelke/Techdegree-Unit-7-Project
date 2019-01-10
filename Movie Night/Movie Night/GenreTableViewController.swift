@@ -31,7 +31,7 @@ class GenreTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)", sendingViewController: self)
             }
         }
     }
@@ -158,6 +158,7 @@ class GenreTableViewController: UITableViewController {
         if selectedCount > 0 {
             performSegue(withIdentifier: "selectActors", sender: Any?.self)
         }
+        showAlert(title: "Missing information", message: "Please select at least one item", sendingViewController: self)
     }
     
 }

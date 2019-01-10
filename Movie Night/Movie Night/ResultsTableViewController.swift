@@ -15,7 +15,6 @@ class ResultsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print(MovieSearch.endpoint.url())
         DataManager<MovieSearch>.fetch() { result in
             switch result {
             case .success(let response):
@@ -25,7 +24,7 @@ class ResultsTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)", sendingViewController: self)
             }
         }
     }
@@ -95,5 +94,10 @@ class ResultsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "return", sender: Any?.self)
+    }
+    
 }

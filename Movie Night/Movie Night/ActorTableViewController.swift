@@ -30,7 +30,7 @@ class ActorTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)", sendingViewController: self)
             }
         }
     }
@@ -60,7 +60,7 @@ class ActorTableViewController: UITableViewController {
             selectedCount += 1
             return indexPath
         } else {
-            // prevent selection of more than five items
+            // prevent selection of more than three items
             print("list maxed out at 3")
             tableView.cellForRow(at: indexPath)?.isSelected = false
             tableView.cellForRow(at: indexPath)?.selectionStyle = .none
@@ -153,7 +153,10 @@ class ActorTableViewController: UITableViewController {
     }
     
     @IBAction func nextButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "goToRatingSelection", sender: Any?.self)
+        if selectedCount > 0 {
+            performSegue(withIdentifier: "goToRatingSelection", sender: Any?.self)
+        }
+        showAlert(title: "Missing information", message: "Please select at least one item", sendingViewController: self)
     }
 
 }

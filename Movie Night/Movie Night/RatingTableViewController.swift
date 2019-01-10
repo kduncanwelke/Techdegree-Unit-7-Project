@@ -9,13 +9,14 @@
 import UIKit
 
 class RatingTableViewController: UITableViewController {
+    
+    var selected = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(Viewer.viewer1)
         print(Viewer.viewer2)
-
     }
 
     // MARK: - Table view data source
@@ -37,8 +38,8 @@ class RatingTableViewController: UITableViewController {
         cell.textLabel?.text = Rating.ratingPercentages[indexPath.row].title
         return cell
     }
-    
 
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -116,8 +117,13 @@ class RatingTableViewController: UITableViewController {
     }
     
     @IBAction func submitButtonPressed(_ sender: Any) {
+        let selectedItem = tableView.indexPathsForSelectedRows
+        guard let selection = selectedItem else {
+            showAlert(title: "Missing information", message: "Please make a selection", sendingViewController: self)
+            return
+        }
+        
         performSegue(withIdentifier: "unwindAfterSubmit", sender: Any?.self)
     }
-    
 
 }

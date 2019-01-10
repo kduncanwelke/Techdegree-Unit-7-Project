@@ -192,7 +192,7 @@
                         <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
-                        <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select up to five genres you like" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4bj-Wm-fgM">
+                        <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Select up to five genres you like" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4bj-Wm-fgM">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -336,12 +336,12 @@
                         <barButtonItem key="rightBarButtonItem" title="Submit" id="Nfb-hA-5B2">
                             <connections>
                                 <action selector="submitButtonPressed:" destination="9Qq-At-HCb" id="vXa-oU-0dq"/>
-                                <segue destination="BYZ-38-t0r" kind="showDetail" identifier="unwindAfterSubmit" id="j0p-gp-kP4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="Aqn-q8-4zx" kind="show" identifier="unwindToActors" id="j35-4B-eQh"/>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="unwindAfterSubmit" id="KWg-zs-ijh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsX-d7-WFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -395,7 +395,16 @@
                             <outlet property="delegate" destination="2bv-zg-oOE" id="r3C-wC-ZNo"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Results" id="nFT-rG-HhW"/>
+                    <navigationItem key="navigationItem" title="Results" id="nFT-rG-HhW">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="qIa-rE-Uwe">
+                            <connections>
+                                <action selector="backButtonPressed:" destination="2bv-zg-oOE" id="8Ay-cP-RLX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="return" id="zBI-9U-FX9"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zAx-QB-i9M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -479,6 +488,6 @@
         <segue reference="mDp-Ve-gyU"/>
         <segue reference="j35-4B-eQh"/>
         <segue reference="L0V-gq-heS"/>
-        <segue reference="j0p-gp-kP4"/>
+        <segue reference="KWg-zs-ijh"/>
     </inferredMetricsTieBreakers>
 </document>
