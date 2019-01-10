@@ -23,10 +23,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        updateUI()
-        
         resultsButton.isEnabled = false
+       
+        updateUI()
     }
     
     // MARK: Custom functions
@@ -69,6 +68,7 @@ class ViewController: UIViewController {
     
     
     @IBAction func resultsButtonPressed(_ sender: Any) {
+         performSegue(withIdentifier: "goToResults", sender: (Any).self)
     }
     
 }

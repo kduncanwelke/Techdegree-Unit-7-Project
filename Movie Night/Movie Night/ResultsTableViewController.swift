@@ -1,21 +1,33 @@
 //
-//  RatingTableViewController.swift
+//  ResultsTableViewController.swift
 //  Movie Night
 //
-//  Created by Kate Duncan-Welke on 1/8/19.
+//  Created by Kate Duncan-Welke on 1/9/19.
 //  Copyright © 2019 Kate Duncan-Welke. All rights reserved.
 //
 
 import UIKit
 
-class RatingTableViewController: UITableViewController {
+class ResultsTableViewController: UITableViewController {
+    
+    var resultsList = [MovieSearch]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(Viewer.viewer1)
-        print(Viewer.viewer2)
 
+        print(MovieSearch.endpoint.url())
+        DataManager<MovieSearch>.fetch() { result in
+            switch result {
+            case .success(let response):
+                print(response)
+                DispatchQueue.main.async {
+                    self.resultsList = response
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -25,16 +37,16 @@ class RatingTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Rating.ratingPercentages.count
+       return resultsList.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ratingCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
 
         // Configure the cell...
         cell.textLabel?.textColor = UIColor.white
-        cell.textLabel?.text = Rating.ratingPercentages[indexPath.row].title
+        cell.textLabel?.text = resultsList[indexPath.row].title
         return cell
     }
     
@@ -74,50 +86,14 @@ class RatingTableViewController: UITableViewController {
     }
     */
 
-    
+    /*
     // MARK: - Navigation
 
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "unwindAfterSubmit" {
-            let selectedItem = tableView.indexPathsForSelectedRows
-            guard let selection = selectedItem else { return }
-            let item = selection[0]
-           
-            switch Viewer.currentlySelected {
-            case .viewer1:
-                Viewer.viewer1.preferredMinimumRating = Rating.ratingPercentages[item.row].value
-                Viewer.hasViewer1Selected = true
-            case .viewer2:
-                Viewer.viewer2.preferredMinimumRating = Rating.ratingPercentages[item.row].value
-                Viewer.hasViewer2Selected = true
-            default:
-                break // should not be able to be none, add error handling if is
-            }
-        }
-        
-        if segue.identifier == "unwindToActors" {
-            switch Viewer.currentlySelected {
-            case .viewer1:
-                Viewer.viewer1.preferredActors.removeAll()
-                Viewer.viewer1.preferredMinimumRating = 0
-            case .viewer2:
-                Viewer.viewer2.preferredActors.removeAll()
-                Viewer.viewer2.preferredMinimumRating = 0
-            default:
-                break // should not be able to be none, add error handling if is
-            }
-        }
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
     }
-    
-    // MARK: Actions
-    
-    @IBAction func backButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "unwindToActors", sender: Any?.self)
-    }
-    
-    @IBAction func submitButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "unwindAfterSubmit", sender: Any?.self)
-    }
-    
+    */
 
 }

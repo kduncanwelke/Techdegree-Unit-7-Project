@@ -24,5 +24,21 @@ struct Viewer {
     }
     
     static var currentlySelected = CurrentlySelected.none
+    
+    static func getGenres(for viewer: Viewer) -> String {
+        var returnedString = ""
+        for genre in viewer.preferredGenres {
+            returnedString += String(describing: genre.id) + "|"
+        }
+        return returnedString
+    }
+    
+    static func getActors(for viewer: Viewer) -> String {
+        var returnedString = ""
+        for actor in viewer.preferredActors {
+            returnedString += String(describing: actor.id) + "|"
+        }
+        return returnedString
+    }
 }
 
