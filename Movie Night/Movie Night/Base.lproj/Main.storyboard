@@ -394,7 +394,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="iTunesArtwork" id="inb-AT-41Z">
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="iTunesArtwork" id="inb-AT-41Z">
                                             <rect key="frame" x="16" y="0.0" width="44" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
@@ -502,6 +502,6 @@
         <segue reference="mDp-Ve-gyU"/>
         <segue reference="j35-4B-eQh"/>
         <segue reference="1Ah-oA-YSz"/>
-        <segue reference="KWg-zs-ijh"/>
+        <segue reference="zBI-9U-FX9"/>
     </inferredMetricsTieBreakers>
 </document>

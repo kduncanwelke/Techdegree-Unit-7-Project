@@ -60,6 +60,7 @@ class ResultsTableViewController: UITableViewController {
         // Configure the cell...
         cell.textLabel?.textColor = UIColor.white
         cell.textLabel?.text = resultsList[indexPath.row].title
+        cell.imageView?.getImage(partialURL: resultsList[indexPath.row].posterPath)
         return cell
     }
     
