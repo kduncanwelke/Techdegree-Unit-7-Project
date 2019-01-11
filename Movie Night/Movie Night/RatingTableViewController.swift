@@ -118,8 +118,8 @@ class RatingTableViewController: UITableViewController {
     
     @IBAction func submitButtonPressed(_ sender: Any) {
         let selectedItem = tableView.indexPathsForSelectedRows
-        guard let selection = selectedItem else {
-            showAlert(title: "Missing information", message: "Please make a selection", sendingViewController: self)
+        guard selectedItem != nil else {
+            showAlert(title: "Missing information", message: "Please make a selection")
             return
         }
         

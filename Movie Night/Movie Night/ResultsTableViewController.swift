@@ -11,6 +11,7 @@ import UIKit
 class ResultsTableViewController: UITableViewController {
     
     var resultsList = [MovieSearch]()
+    //var artworkList = [Artwork]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +25,22 @@ class ResultsTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)", sendingViewController: self)
+                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)")
             }
         }
+        
+       /* DataManager<Artwork>.fetch() { result in
+            switch result {
+            case .success(let response):
+                print(response)
+                DispatchQueue.main.async {
+                    self.artworkList = response
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)", sendingViewController: self)
+            }
+        }*/
     }
 
     // MARK: - Table view data source

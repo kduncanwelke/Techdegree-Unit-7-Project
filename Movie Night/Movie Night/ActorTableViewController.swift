@@ -30,7 +30,7 @@ class ActorTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)", sendingViewController: self)
+                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)")
             }
         }
     }
@@ -155,8 +155,9 @@ class ActorTableViewController: UITableViewController {
     @IBAction func nextButtonPressed(_ sender: Any) {
         if selectedCount > 0 {
             performSegue(withIdentifier: "goToRatingSelection", sender: Any?.self)
+        } else {
+            showAlert(title: "Missing information", message: "Please select at least one item")
         }
-        showAlert(title: "Missing information", message: "Please select at least one item", sendingViewController: self)
     }
 
 }

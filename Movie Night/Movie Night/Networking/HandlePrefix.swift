@@ -14,4 +14,5 @@ struct HandlePrefix<T: Codable>: Codable {
     var totalResults: Int?
     var totalPages: Int?
     var results: [T]?
+    var posterPath: String?
 }

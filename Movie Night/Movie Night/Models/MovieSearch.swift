@@ -10,5 +10,6 @@ import Foundation
 
 struct MovieSearch: MovieType {
     let title: String
+    let posterPath: String
     static var endpoint = Endpoint.search
 }

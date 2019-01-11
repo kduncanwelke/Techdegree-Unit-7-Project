@@ -21,6 +21,10 @@ enum Endpoint {
         return "APIKEY"
     }
     
+    private var imageURL: URL {
+        return URL(string: "https://image.tmdb.org/t/p/")!
+    }
+    
     func url() -> URL {
         switch self {
         case .genre:
@@ -44,3 +48,5 @@ enum Endpoint {
     }
 }
 
+// let components = URLComponents(url: imageURL.appendingPathComponent("w185\(String(describing: poster))"), resolvingAgainstBaseURL: false)
+// return components!.url!
