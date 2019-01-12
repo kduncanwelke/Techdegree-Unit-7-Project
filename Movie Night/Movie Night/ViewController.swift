@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     // MARK: Outlets
+    var actorsList = [Actor]()
     
     @IBOutlet weak var viewer1ChoicesLabel: UILabel!
     @IBOutlet weak var viewer2ChoicesLabel: UILabel!
@@ -20,27 +21,59 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var resultsButton: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        resultsButton.isEnabled = false
-       
         updateUI()
+
     }
     
     // MARK: Custom functions
     
     func updateUI() {
+        checkForCompleteSelection()
+        
+        // toggle UI based on selections
         if Viewer.hasViewer1Selected {
             viewer1View.setImage(UIImage(named: "bubble-selected"), for: .normal)
-            viewer1ChoicesLabel.text = "Genres: \(Viewer.viewer1.preferredGenres.count) selected \nActors: \(Viewer.viewer1.preferredActors.count) selected \nMinimum rating: \(Viewer.viewer1.preferredMinimumRating)0%"
+             viewer1ChoicesLabel.text = "Genres: \(Viewer.viewer1.preferredGenres.count) selected \nActors: \(Viewer.viewer1.preferredActors.count) selected \nMinimum rating: \(Viewer.viewer1.preferredMinimumRating)0%"
+        } else {
+            viewer1View.setImage(UIImage(named: "bubble-empty"), for: .normal)
+             viewer1ChoicesLabel.text = "Selection incomplete - tap bubble to continue \n\nGenres: \(Viewer.viewer1.preferredGenres.count) selected \nActors: \(Viewer.viewer1.preferredActors.count) selected \nMinimum rating: \(Viewer.viewer1.preferredMinimumRating)0%"
         }
+        
         if Viewer.hasViewer2Selected {
             viewer2View.setImage(UIImage(named: "bubble-selected"), for: .normal)
             viewer2ChoicesLabel.text = "Genres: \(Viewer.viewer2.preferredGenres.count) selected \nActors: \(Viewer.viewer2.preferredActors.count) selected \nMinimum rating: \(Viewer.viewer2.preferredMinimumRating)0%"
+        } else {
+            viewer2View.setImage(UIImage(named: "bubble-empty"), for: .normal)
+            viewer2ChoicesLabel.text = "Selection incomplete - tap bubble to continue \n\nGenres: \(Viewer.viewer2.preferredGenres.count) selected \nActors: \(Viewer.viewer2.preferredActors.count) selected \nMinimum rating: \(Viewer.viewer2.preferredMinimumRating)0%"
         }
-        if Viewer.hasViewer1Selected && Viewer.hasViewer2Selected {
-            resultsButton.isEnabled = true
+    }
+    
+    func checkForCompleteSelection() {
+        // if any of the items are missing, set hasselected to false to prevent segue to results
+        if Viewer.viewer1.preferredGenres.isEmpty || Viewer.viewer1.preferredActors.isEmpty || Viewer.viewer1.preferredMinimumRating == 0 {
+            Viewer.hasViewer1Selected = false
+        }
+        
+        if Viewer.viewer2.preferredGenres.isEmpty || Viewer.viewer2.preferredActors.isEmpty || Viewer.viewer2.preferredMinimumRating == 0 {
+            Viewer.hasViewer2Selected = false
+        }
+    }
+    
+    func checkSubmission() -> Bool {
+        // check that no items are empty - this can happen if a viewer makes initial selections, then goes back into the selection menu and backs out
+        if Viewer.viewer1.preferredGenres.isEmpty || Viewer.viewer2.preferredGenres.isEmpty {
+            showAlert(title: "Selection incomplete", message: "Please select at least one genre for each viewer")
+            return false
+        } else if Viewer.viewer1.preferredActors.isEmpty || Viewer.viewer2.preferredActors.isEmpty  {
+            showAlert(title: "Selection incomplete", message: "Please select at least one actor for each viewer")
+            return false
+        } else if Viewer.viewer1.preferredMinimumRating == 0 || Viewer.viewer2.preferredMinimumRating == 0  {
+            showAlert(title: "Selection incomplete", message: "Please select a minimum rating for each viewer")
+            return false
+        } else {
+            return true
         }
     }
     
@@ -68,7 +101,11 @@ class ViewController: UIViewController {
     
     
     @IBAction func resultsButtonPressed(_ sender: Any) {
-         performSegue(withIdentifier: "goToResults", sender: (Any).self)
+        if checkSubmission() {
+            performSegue(withIdentifier: "goToResults", sender: (Any).self)
+        } else {
+            return
+        }
     }
     
 }

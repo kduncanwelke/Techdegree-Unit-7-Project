@@ -11,36 +11,25 @@ import UIKit
 class ResultsTableViewController: UITableViewController {
     
     var resultsList = [MovieSearch]()
-    //var artworkList = [Artwork]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        DataManager<MovieSearch>.fetch() { result in
+        DataManager<MovieSearch>.getData() { result in
             switch result {
             case .success(let response):
-                print(response)
                 DispatchQueue.main.async {
                     self.resultsList = response
+                    if self.resultsList.isEmpty {
+                        self.showAlert(title: "No results found", message: "Please modify your selections and try again")
+                    } else {
                     self.tableView.reloadData()
+                    }
                 }
             case .failure(let error):
                 self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)")
             }
         }
-        
-       /* DataManager<Artwork>.fetch() { result in
-            switch result {
-            case .success(let response):
-                print(response)
-                DispatchQueue.main.async {
-                    self.artworkList = response
-                    self.tableView.reloadData()
-                }
-            case .failure(let error):
-                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)", sendingViewController: self)
-            }
-        }*/
     }
 
     // MARK: - Table view data source
@@ -64,55 +53,26 @@ class ResultsTableViewController: UITableViewController {
         return cell
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "viewDetails", sender: Any?.self)
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "viewDetails" {
+            if let destinationViewController = segue.destination as? DetailsViewController {
+                guard let selection = tableView.indexPathForSelectedRow else { return }
+                
+                destinationViewController.selectedFilm = resultsList[selection.row]
+            }
+        }
     }
-    */
     
     
     @IBAction func backButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "return", sender: Any?.self)
     }
-    
 }

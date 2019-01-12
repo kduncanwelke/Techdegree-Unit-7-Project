@@ -15,14 +15,10 @@ class ActorTableViewController: UITableViewController {
     var actorsList = [Actor]()
     var selectedCount = 0
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(Viewer.viewer1)
-        print(Viewer.viewer2)
-        
-        DataManager<Actor>.fetch() { result in
+        DataManager<Actor>.getData() { result in
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
@@ -73,42 +69,6 @@ class ActorTableViewController: UITableViewController {
             selectedCount -= 1
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
@@ -116,6 +76,7 @@ class ActorTableViewController: UITableViewController {
         if segue.identifier == "goToRatingSelection" {
             let selectedItems = tableView.indexPathsForSelectedRows
             guard let selections = selectedItems else { return }
+            // assign selection to viewer actors
             
             switch Viewer.currentlySelected {
             case .viewer1:
@@ -127,11 +88,12 @@ class ActorTableViewController: UITableViewController {
                     Viewer.viewer2.preferredActors.append(actorsList[item.row])
                 }
             default:
-                break // should not be able to be none, add error handling if is
+                break
             }
         }
         
         if segue.identifier == "unwindToGenre" {
+            // wipe selections if going back to prevent duplication
             switch Viewer.currentlySelected {
             case .viewer1:
                 Viewer.viewer1.preferredGenres.removeAll()
@@ -140,7 +102,7 @@ class ActorTableViewController: UITableViewController {
                 Viewer.viewer2.preferredGenres.removeAll()
                 Viewer.viewer2.preferredActors.removeAll()
             default:
-                break // should not be able to be none, add error handling if is
+                break
             }
         }
     }

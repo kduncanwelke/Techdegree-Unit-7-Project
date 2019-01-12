@@ -25,8 +25,8 @@ struct DataManager<T: MovieType> {
     
     }
     
-    static func fetch(completion: @escaping (Result<[T]>) -> Void) {
-        fetch(url: T.endpoint.url(page: 1)) { result in
+    static func fetch(with page: Int, completion: @escaping (Result<[T]>) -> Void) {
+        fetch(url: T.endpoint.url(page: page)) { result in
             switch result {
             case .success(let result):
                 if let genres = result.genres {
@@ -46,13 +46,13 @@ struct DataManager<T: MovieType> {
             switch result {
             case .success(let response):
                 if let genres = response.genres {
-                     resultArray.append(contentsOf: genres)
+                    resultArray.append(contentsOf: genres)
+                    completion(.success(resultArray))
                 } else if let results = response.results {
                      resultArray.append(contentsOf: results)
-                    if response.totalPages != nil {
+                    if response.page == 1 {
                         fetch(url: T.endpoint.url(page: 2), completion: handle)
                     }
-                } else {
                     completion(.success(resultArray))
                 }
             case .failure(let error):
