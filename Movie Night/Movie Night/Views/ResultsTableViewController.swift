@@ -19,15 +19,22 @@ class ResultsTableViewController: UITableViewController {
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
-                    self.resultsList = response
-                    if self.resultsList.isEmpty {
+                    if response.isEmpty {
                         self.showAlert(title: "No results found", message: "Please modify your selections and try again")
                     } else {
-                    self.tableView.reloadData()
+                        self.resultsList = response
+                        self.tableView.reloadData()
                     }
                 }
             case .failure(let error):
-                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    switch error {
+                    case Errors.networkError:
+                        self.showAlert(title: "Networking failed", message: "\(Errors.networkError.localizedDescription)")
+                    default:
+                        self.showAlert(title: "Networking failed", message: "\(error.localizedDescription)")
+                    }
+                }
             }
         }
     }

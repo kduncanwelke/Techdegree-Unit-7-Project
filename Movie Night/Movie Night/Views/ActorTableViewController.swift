@@ -26,7 +26,14 @@ class ActorTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                self.showAlert(title: "Networking failed", message: "Network error: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    switch error {
+                    case Errors.networkError:
+                         self.showAlert(title: "Networking failed", message: "\(Errors.networkError.localizedDescription)")
+                    default:
+                         self.showAlert(title: "Networking failed", message: "\(error.localizedDescription)")
+                    }
+                }
             }
         }
     }

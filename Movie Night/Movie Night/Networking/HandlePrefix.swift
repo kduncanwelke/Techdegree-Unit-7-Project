@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HandlePrefix<T: Codable>: Codable {
+struct HandlePages<T: Codable>: Codable {
     var genres: [T]?
     var page: Int?
     var totalResults: Int?

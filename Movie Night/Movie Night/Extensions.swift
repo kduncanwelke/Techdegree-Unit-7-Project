@@ -19,10 +19,11 @@ extension UIViewController {
 }
 
 extension UIImageView {
-    public func getImage(partialURL: String) {
+    func getImage(partialURL: String) {
         let urlString = "https://image.tmdb.org/t/p/w185" + partialURL
+        guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+        URLSession.shared.dataTask(with: url) { (data, response, error) -> Void in
             if let error = error {
                 print(error)
                 return
@@ -31,7 +32,7 @@ extension UIImageView {
                 let image = UIImage(data: data!)
                 self.image = image
             })
-        }) .resume()
+        } .resume()
     }
 }
 

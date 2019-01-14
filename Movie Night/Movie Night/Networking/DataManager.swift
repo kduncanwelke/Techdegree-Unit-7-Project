@@ -9,12 +9,11 @@
 import Foundation
 
 struct DataManager<T: MovieType> {
-    private static func fetch(url: URL, completion: @escaping (Result<HandlePrefix<T>>) -> Void) {
+    private static func fetch(url: URL, completion: @escaping (Result<HandlePages<T>>) -> Void) {
         Networker.fetchData(url: url) { result in
             switch result {
             case .success(let data):
-                guard let response = try? JSONDecoder.TMDBDecoder.decode(HandlePrefix<T>.self, from: data) else {
-                    print("fail")
+                guard let response = try? JSONDecoder.TMDBDecoder.decode(HandlePages<T>.self, from: data) else {
                     return
                 }
                 completion(.success(response))
@@ -22,7 +21,6 @@ struct DataManager<T: MovieType> {
                 completion(.failure(error))
             }
         }
-    
     }
     
     static func fetch(with page: Int, completion: @escaping (Result<[T]>) -> Void) {
@@ -42,7 +40,7 @@ struct DataManager<T: MovieType> {
     
     static func getData(completion: @escaping (Result<[T]>) -> Void) {
         var resultArray = [T]()
-        func handle(result: Result<HandlePrefix<T>>) {
+        func handle(result: Result<HandlePages<T>>) {
             switch result {
             case .success(let response):
                 if let genres = response.genres {
